@@ -14,15 +14,15 @@ const originTags = [
   {
     text: '浙江',
     children: [
-      {text: '杭州', id: '杭州'},
-      {text: '温州', id: '温州'},
+      {text: '杭州', id: 'java'},
+      {text: '温州', id: 'python'},
       {text: '宁波', id: '宁波', disabled: true},
     ],
   },
   {
     text: '江苏',
     children: [
-      {text: '南京', id: '南京'},
+      {text: '南京', id: 'c++'},
       {text: '无锡', id: '无锡'},
       {text: '徐州', id: '徐州'},
     ],
