@@ -39,5 +39,7 @@ const onClickRight = () => {
 </template>
 
 <style scoped>
-
+#content{
+  padding-bottom: 60px;
+}
 </style>

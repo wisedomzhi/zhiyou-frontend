@@ -3,6 +3,7 @@ import {useRoute} from "vue-router";
 import {onMounted, ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
 import qs from "qs"
+import UserCard from "../components/UserCard.vue";
 
 
 const route = useRoute();
@@ -44,19 +45,7 @@ const mockUser = {
 </script>
 
 <template>
-  <van-card
-      v-for="user in userList"
-      :desc="user.userProfile"
-      :title="user.username"
-      thumb="https://fastly.jsdelivr.net/npm/@vant/assets/ipad.jpeg"
-  >
-    <template #tags>
-      <van-tag v-for="tag in user.tags" plain type="primary" style="margin-right: 5px; margin-top: 5px">{{ tag }}</van-tag>
-    </template>
-    <template #footer>
-      <van-button  size="normal">联系我</van-button>
-    </template>
-  </van-card>
+  <user-card :user-list="userList"/>
   <van-empty v-if="!userList||userList.length==0" description="搜索结果为空" />
 </template>
 
