@@ -1,4 +1,4 @@
-<script setup lang="ts">
+TeamPage.vue<script setup lang="ts">
 import {useRouter} from "vue-router";
 import TeamCard from "../components/TeamCard.vue";
 import {onMounted, ref} from "vue";
@@ -9,7 +9,7 @@ const router = useRouter();
 const teamList = ref([]);
 
 const listTeams = async (val = '') => {
-  const res = await myAxios.get('/team/list', {
+  const res = await myAxios.get('/team/list/create', {
     params : {
       page:1,
       pageSize:10,
@@ -38,7 +38,7 @@ const doAddTeam = () => {
 
 <template>
   <van-search v-model="searchText" placeholder="请输入搜索关键词"  @search="onSearch" />
-  <van-button type="primary" @click="doAddTeam">加入队伍</van-button>
+  <van-button type="primary" @click="doAddTeam">创建队伍</van-button>
   <TeamCard :team-list="teamList"/>
 </template>
 
