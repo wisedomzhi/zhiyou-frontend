@@ -13,4 +13,5 @@ export type TeamType = {
     teamStatus: Number;
     createTime?: Date;
     updateTime?: Date;
+    hasJoin:boolean;
 };

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 const userAccount = ref('');
 const userPassword = ref('');
 const onSubmit = async (values) => {
@@ -12,7 +13,8 @@ const onSubmit = async (values) => {
     userPassword: userPassword.value
   });
   if(res.data.code === 0){
-    router.replace("/");
+    const redirectUrl = route.query?.redirect??'/';
+    window.location.href = redirectUrl;
   }
 };
 </script>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-
+const NOT_LOGIN = 40100
 const myAxios = axios.create({
     baseURL: '/api',
 });
@@ -8,7 +8,7 @@ const myAxios = axios.create({
 myAxios.defaults.withCredentials = true;
 
 // 添加请求拦截器
-axios.interceptors.request.use(function (config) {
+myAxios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     return config;
 }, function (error) {
@@ -17,10 +17,13 @@ axios.interceptors.request.use(function (config) {
 });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
+myAxios.interceptors.response.use(function (response) {
     // 2xx 范围内的状态码都会触发该函数。
     // 对响应数据做点什么
-    console.log("接收请求")
+    if(response.data?.code === NOT_LOGIN){
+        const redirectUrl = window.location.href;
+        window.location.href = `/user/login?redirect=${redirectUrl}`;
+    }
     return response;
 }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。

@@ -33,7 +33,7 @@ const onSearch = () => {
 
 <template>
   <van-search v-model="searchText" placeholder="请输入搜索关键词"  @search="onSearch" />
-  <TeamCard :team-list="teamList"/>
+  <TeamCard :team-list="teamList" @update-data="listTeams"/>
 </template>
 
 <style scoped>

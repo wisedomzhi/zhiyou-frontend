@@ -34,12 +34,20 @@ const doAddTeam = () => {
     path:'/team/add'
   })
 }
+
+const offset = ref({ x: 300, y: 560 });
 </script>
 
 <template>
-  <van-search v-model="searchText" placeholder="请输入搜索关键词"  @search="onSearch" />
-  <van-button type="primary" @click="doAddTeam">创建队伍</van-button>
-  <TeamCard :team-list="teamList"/>
+  <van-search v-model="searchText" placeholder="搜索队伍"  @search="onSearch" />
+  <TeamCard :team-list="teamList" @update-data="listTeams"/>
+  <van-floating-bubble
+      :offset="offset"
+      axis="xy"
+      icon="plus"
+      magnetic="x"
+      @click="doAddTeam"
+  />
 </template>
 
 <style scoped>

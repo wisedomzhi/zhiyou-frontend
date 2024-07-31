@@ -14,18 +14,18 @@ import UserTeamCreatedPage from "../Pages/UserTeamCreatedPage.vue";
 
 
 const routes = [
-    { path: '/', component: Index },
-    { path: '/search', component: SearchPage },
-    { path: '/team', component: TeamPage },
-    { path: '/team/add', component: TeamAddPage },
-    { path: '/team/update', component: TeamUpdatePage },
-    { path: '/user', component: UserPage },
-    { path: '/user/edit', component: UserEditPage },
-    { path: '/user/list', component: SearchResult },
-    { path: '/user/login', component: UserLoginPage },
-    { path: '/user/update', component: UserUpdatePage },
-    { path: '/user/joined', component: UserTeamJoinedPage },
-    { path: '/user/created', component: UserTeamCreatedPage },
+    { path: '/', component: Index , meta:{title:"智友伙伴匹配"}},
+    { path: '/search', component: SearchPage,  meta:{title:"搜索用户"} },
+    { path: '/team', component: TeamPage,  meta:{title:"队伍"}},
+    { path: '/team/add', component: TeamAddPage,  meta:{title:"添加队伍"} },
+    { path: '/team/update', component: TeamUpdatePage ,  meta:{title:"修改队伍"}},
+    { path: '/user', component: UserPage,  meta:{title:"个人"} },
+    { path: '/user/edit', component: UserEditPage,  meta:{title:"编辑个人信息"} },
+    { path: '/user/list', component: SearchResult,  meta:{title:"搜索结果"} },
+    { path: '/user/login', component: UserLoginPage ,  meta:{title:"登录"}},
+    { path: '/user/update', component: UserUpdatePage ,  meta:{title:"个人"}},
+    { path: '/user/joined', component: UserTeamJoinedPage ,  meta:{title:"已加入队伍"}},
+    { path: '/user/created', component: UserTeamCreatedPage ,  meta:{title:"已创建队伍"}},
 ]
 
 export default routes;

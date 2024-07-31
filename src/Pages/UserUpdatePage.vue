@@ -56,9 +56,9 @@ const toEdit = (editKey:string, editValue:string, editTitle:string) => {
           src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
       />
     </van-cell>
-    <van-cell center title="名字" is-link @click="toEdit('username', user.username, '名字')" :value="user.username" />
+    <van-cell center title="用户名" is-link @click="toEdit('username', user.username, '用户名')" :value="user.username" />
     <van-cell center title="账号" is-link @click="toEdit('userAccount', user.userAccount, '账号')" :value="user.userAccount" />
-    <van-cell center title="性别" is-link @click="toEdit('gender', user.gender, '性别')" :value="user.gender" />
+    <van-cell center title="性别" :value="user.gender === 0 ? '男' : '女'" />
     <van-cell center title="电话" is-link @click="toEdit('phone', user.phone, '电话')" :value="user.phone" />
     <van-cell center title="邮箱" is-link @click="toEdit('email', user.email, '邮箱')" :value="user.email" />
     <van-cell center title="创建时间"  :value="renderTime(user.createTime)" />

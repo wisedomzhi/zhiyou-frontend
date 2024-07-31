@@ -40,7 +40,7 @@ const onSubmit = async (values) => {
     showToast("添加成功！");
     router.replace("/team");
   }else {
-    showToast("添加失败！");
+    showToast("添加失败！" + res.data?.description);
   }
 };
 </script>
@@ -109,9 +109,6 @@ const onSubmit = async (values) => {
       </van-button>
     </div>
   </van-form>
-  {{
-    addTeamData
-  }}
 </template>
 
 <style scoped>
