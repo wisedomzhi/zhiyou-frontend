@@ -2,7 +2,7 @@ import axios from "axios";
 
 const NOT_LOGIN = 40100
 const myAxios = axios.create({
-    baseURL: '/api',
+    baseURL: import.meta.env.PROD?"http://zhiyou.wisewind.site/api":'/api',
 });
 
 myAxios.defaults.withCredentials = true;

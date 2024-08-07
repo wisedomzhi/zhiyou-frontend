@@ -1,32 +1,88 @@
 <script setup lang="ts">
-import {ref} from 'vue';
-import {showToast} from 'vant';
-import {useRouter} from "vue-router";
+import {onMounted, ref} from 'vue';
+import {showFailToast, showSuccessToast, showToast} from 'vant';
+import {useRoute, useRouter} from "vue-router";
+import myAxios from "../plugins/myAxios.ts";
 
 
 const value = ref('');
 
 const router = useRouter();
+const route = useRoute();
 
-const activeIds = ref([1, 2]);
+const edit = ref(route.query?.edit);
+const tags = route.query?.tags;
+const userId = route.query?.id;
+const activeIds = ref([]);
 const activeIndex = ref(0);
+
+onMounted(() => {
+  if(tags){
+    activeIds.value = JSON.parse(tags)
+  }
+})
+
 const originTags = [
   {
-    text: '浙江',
+    text: "语言",
     children: [
-      {text: '杭州', id: 'java'},
-      {text: '温州', id: 'python'},
-      {text: '宁波', id: '宁波', disabled: true},
-    ],
+      {text: "Java", id: "java"},
+      {text: "Python", id: "python"},
+      {text: "C++", id: "cpp"},
+      {text: "JavaScript", id: "javascript"},
+      {text: "Go", id: "go"},
+      {text: "Ruby", id: "ruby"}
+    ]
   },
   {
-    text: '江苏',
+    text: "技术栈",
     children: [
-      {text: '南京', id: 'c++'},
-      {text: '无锡', id: '无锡'},
-      {text: '徐州', id: '徐州'},
-    ],
+      {text: "前端", id: "frontend"},
+      {text: "后端", id: "backend"},
+      {text: "全栈", id: "fullstack"},
+      {text: "DevOps", id: "devops"},
+      {text: "数据科学", id: "datascience"},
+      {text: "人工智能", id: "ai"}
+    ]
   },
+  {
+    text: "开发工具",
+    children: [
+      {text: "VS Code", id: "vscode"},
+      {text: "IntelliJ IDEA", id: "intellij"},
+      {text: "PyCharm", id: "pycharm"},
+      {text: "Eclipse", id: "eclipse"},
+      {text: "Git", id: "git"},
+      {text: "Docker", id: "docker"}
+    ]
+  },
+  {
+    text: "爱好",
+    children: [
+      {text: "开源贡献", id: "opensource"},
+      {text: "黑客马拉松", id: "hackathon"},
+      {text: "技术博客", id: "techblog"},
+      {text: "编程挑战", id: "codingchallenge"}
+    ]
+  },
+  {
+    text: "特长",
+    children: [
+      {text: "算法设计", id: "algorithms"},
+      {text: "系统架构", id: "architecture"},
+      {text: "数据库优化", id: "database_optimization"},
+      {text: "代码审查", id: "code_review"}
+    ]
+  },
+  {
+    text: "性格特点",
+    children: [
+      {text: "逻辑性强", id: "logical"},
+      {text: "好奇心重", id: "curious"},
+      {text: "问题解决者", id: "problem_solver"},
+      {text: "团队协作", id: "team_player"}
+    ]
+  }
 ];
 
 const showTags = ref(originTags);
@@ -39,7 +95,7 @@ const close = (tag) => {
 };
 
 
-// TODO 搜素标签根据后端传来的数据结果要做修改
+
 const onSearch = (val) => {
   showTags.value = originTags.map(parentTag => {
     const tempParentTag = {...parentTag};
@@ -61,6 +117,22 @@ const doSearch = () =>{
     }
   })
 }
+
+const doUpdate = async () => {
+  const updateTags = JSON.stringify(activeIds.value);
+  const res = await myAxios.post("/user/update",{
+    id:userId,
+    tags:updateTags
+  })
+  if(res.data.code === 0){
+    showSuccessToast("修改成功");
+    router.push({
+      path:"/user/update"
+    })
+  }else{
+    showFailToast("修改失败")
+  }
+}
 </script>
 
 <template>
@@ -75,9 +147,9 @@ const doSearch = () =>{
   </form>
 
   <van-divider content-position="left">已选标签</van-divider>
-  <van-row :gutter="[14, 20]">
+  <van-row>
     <template v-for="tag in activeIds">
-      <van-col span="5">
+      <van-col span="4" style="margin-top: 5px; margin-right: 25px">
         <van-tag round type="primary" :show="show" closeable size="medium" @close="close(tag)">{{tag}}</van-tag>
       </van-col>
     </template>
@@ -94,7 +166,8 @@ const doSearch = () =>{
   />
 
 <div style="margin: 15px">
-  <van-button size="large" type="primary" @click="doSearch">主要按钮</van-button>
+  <van-button v-if="edit" size="large" type="primary" @click="doUpdate">修改</van-button>
+  <van-button v-else size="large" type="primary" @click="doSearch">搜索</van-button>
 </div>
 
 

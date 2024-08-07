@@ -1,6 +1,7 @@
 /**
  * 用户类型
  */
+import {UserType} from "./user";
 
 export type TeamType = {
     id?: number;
@@ -14,4 +15,7 @@ export type TeamType = {
     createTime?: Date;
     updateTime?: Date;
     hasJoin:boolean;
+    joinedUser:UserType[];
+    createUser:UserType;
+    teamAvatarUrl:string;
 };

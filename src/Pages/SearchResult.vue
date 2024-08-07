@@ -46,7 +46,6 @@ const mockUser = {
 
 <template>
   <user-card :user-list="userList"/>
-  <van-empty v-if="!userList||userList.length==0" description="搜索结果为空" />
 </template>
 
 <style scoped>

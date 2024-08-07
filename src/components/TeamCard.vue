@@ -7,6 +7,7 @@ import {UserType} from "../model/user";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
 import {useRouter} from "vue-router";
+import {defaultTeam, defaultUser} from "../common/constant.ts";
 
 interface teamCardProps {
   teamList: TeamType[]
@@ -85,6 +86,15 @@ const doDeleteTeam =  async (teamId) => {
 
 const user:UserType = ref([])
 
+const showTeam = (teamId) => {
+  router.push({
+    path:'team/show',
+    query:{
+      id:teamId
+    }
+  })
+}
+
 onMounted(async () => {
   user.value =  await getCurrentUser()
 })
@@ -95,20 +105,35 @@ onMounted(async () => {
       v-for="team in teamList"
       :desc="team.teamDescription"
       :title="team.teamName"
-      thumb="https://fastly.jsdelivr.net/npm/@vant/assets/ipad.jpeg"
+      :thumb="team.teamAvatarUrl??defaultTeam"
   >
 
     <template #bottom>
+
+      <div>
+        队伍人数：{{team.joinedUser.length}}/{{team.maxNum}}
+        <van-image
+            v-for="user in team.joinedUser.slice(0,4)"
+            round
+            width="2rem"
+            height="2rem"
+            :src="user.avatarUrl??defaultUser"
+            style="padding-left: 10px"
+        />
+        <span v-if="team.joinedUser.length>4">...</span>
+      </div>
       <div v-if="team.expireTime">
-        {{ team.expireTime.split(" ")[0] }}
+        创建时间：{{ team.expireTime.split(" ")[0] }}
       </div>
     </template>
     <template #footer>
+
 <!--      todo 根据加入队伍的状态修改-->
       <van-button v-if="!team.hasJoin"  type="primary" size="mini" @click="preJoin(team)">加入队伍</van-button>
       <van-button v-if="user.id === team.userId" type="primary" size="mini" @click="doUpdateTeam(team.id)">更新队伍</van-button>
       <van-button v-if="team.hasJoin" type="primary" size="mini" @click="doQuitTeam(team.id)">退出队伍</van-button>
       <van-button v-if="user.id === team.userId" type="primary" size="mini" @click="doDeleteTeam(team.id)">解散队伍</van-button>
+      <van-button type="primary" size="mini"  @click="showTeam(team.id)">队伍详情</van-button>
     </template>
   </van-card>
   <van-dialog v-model:show="isSecrect" title="请输入密码" show-cancel-button @confirm="doJoinTeam" @cancel="initTeamPassword">

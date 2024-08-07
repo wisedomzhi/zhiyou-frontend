@@ -13,7 +13,7 @@ const listTeams = async (val = '', status = 0) => {
   const res = await myAxios.get('/team/list', {
     params : {
       page:1,
-      pageSize:10,
+      pageSize:100,
       searchText:val,
       teamStatus:status
     }
